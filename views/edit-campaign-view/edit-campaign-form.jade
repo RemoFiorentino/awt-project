@@ -1,0 +1,53 @@
+#edit-campaign-form.container
+    h3 edit-campaign-form
+    form(id='edit-campaign-form')
+        - var fields = vm['edit-campaign-form'].fields
+            .form-group
+                label annotation_replica
+                input(type='text', name='edit-campaign-form$f$annotation_replica', data-name='edit-campaign-form$f$annotation_replica', value=fields['annotation_replica'])
+            .form-group
+                label annotation_size
+                input(type='text', name='edit-campaign-form$f$annotation_size', data-name='edit-campaign-form$f$annotation_size', value=fields['annotation_size'])
+            .form-group
+                label name
+                input(type='text', name='edit-campaign-form$f$name', data-name='edit-campaign-form$f$name', value=fields['name'])
+            .form-group
+                label selection_replica
+                input(type='text', name='edit-campaign-form$f$selection_replica', data-name='edit-campaign-form$f$selection_replica', value=fields['selection_replica'])
+            .form-group
+                label threshold
+                input(type='text', name='edit-campaign-form$f$threshold', data-name='edit-campaign-form$f$threshold', value=fields['threshold'])
+        .row
+        button#7d7aa24d-b606-4a4d-95b6-e026635228e0.col-xs-2.btn.btn-default(data-action=vm['7d7aa24d-b606-4a4d-95b6-e026635228e0'].href, data-method= 'POST') event
+    script.
+        (function () {
+            var form = $('#edit-campaign-form > form'),
+                bindings = {
+                    '7d7aa24d-b606-4a4d-95b6-e026635228e0': {
+                        'edit-campaign-form$f$annotation_replica': 'send-edit-campaign$f$annotation_replica'
+                        ,'edit-campaign-form$f$annotation_size': 'send-edit-campaign$f$annotation_size'
+                        ,'edit-campaign-form$f$name': 'send-edit-campaign$f$name'
+                        ,'edit-campaign-form$f$selection_replica': 'send-edit-campaign$f$selection_replica'
+                        ,'edit-campaign-form$f$threshold': 'send-edit-campaign$f$threshold'
+                    }
+                };
+            function toURL(href) {
+                var a = document.createElement('a');
+                a.href = href;
+                return new URL(a.href);
+            }
+            $('#edit-campaign-form > form > button[data-action]').click(function () {
+                var action = toURL($(this).data('action')),
+                    method = $(this).data('method'),
+                    mapping = bindings[this.id];
+                $('#edit-campaign-form input').each(function () {
+                    var name = $(this).data('name');
+                    if (action.searchParams.has(name)) {
+                        action.searchParams.set(name, input.value);
+                    }
+                    this.name = mapping[name] || '';
+                });
+                form.attr('action', action.href);
+                form.attr('method', method);
+            });
+        }());

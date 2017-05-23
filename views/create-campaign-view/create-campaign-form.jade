@@ -1,0 +1,53 @@
+#create-campaign-form.container
+    h3 create-campaign-form
+    form(id='create-campaign-form')
+        - var fields = vm['create-campaign-form'].fields
+            .form-group
+                label annotation_replica
+                input(type='text', name='create-campaign-form$f$annotation_replica', data-name='create-campaign-form$f$annotation_replica', value=fields['annotation_replica'])
+            .form-group
+                label annotation_size
+                input(type='text', name='create-campaign-form$f$annotation_size', data-name='create-campaign-form$f$annotation_size', value=fields['annotation_size'])
+            .form-group
+                label name
+                input(type='text', name='create-campaign-form$f$name', data-name='create-campaign-form$f$name', value=fields['name'])
+            .form-group
+                label selection_replica
+                input(type='text', name='create-campaign-form$f$selection_replica', data-name='create-campaign-form$f$selection_replica', value=fields['selection_replica'])
+            .form-group
+                label threshold
+                input(type='text', name='create-campaign-form$f$threshold', data-name='create-campaign-form$f$threshold', value=fields['threshold'])
+        .row
+        button#on-create-campaign-submit.col-xs-2.btn.btn-default(data-action=vm['on-create-campaign-submit'].href, data-method= 'POST') on-create-campaign-submit
+    script.
+        (function () {
+            var form = $('#create-campaign-form > form'),
+                bindings = {
+                    'on-create-campaign-submit': {
+                        'create-campaign-form$f$annotation_replica': 'send-create-campaign-data$f$annotation_replica'
+                        ,'create-campaign-form$f$annotation_size': 'send-create-campaign-data$f$annotation_size'
+                        ,'create-campaign-form$f$name': 'send-create-campaign-data$f$name'
+                        ,'create-campaign-form$f$selection_replica': 'send-create-campaign-data$f$selection_replica'
+                        ,'create-campaign-form$f$threshold': 'send-create-campaign-data$f$threshold'
+                    }
+                };
+            function toURL(href) {
+                var a = document.createElement('a');
+                a.href = href;
+                return new URL(a.href);
+            }
+            $('#create-campaign-form > form > button[data-action]').click(function () {
+                var action = toURL($(this).data('action')),
+                    method = $(this).data('method'),
+                    mapping = bindings[this.id];
+                $('#create-campaign-form input').each(function () {
+                    var name = $(this).data('name');
+                    if (action.searchParams.has(name)) {
+                        action.searchParams.set(name, input.value);
+                    }
+                    this.name = mapping[name] || '';
+                });
+                form.attr('action', action.href);
+                form.attr('method', method);
+            });
+        }());

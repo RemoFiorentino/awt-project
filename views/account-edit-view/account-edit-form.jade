@@ -1,0 +1,41 @@
+#account-edit-form.container
+    h3 account-edit-form
+    form(id='account-edit-form')
+        - var fields = vm['account-edit-form'].fields
+            .form-group
+                label fullname
+                input(type='text', name='account-edit-form$f$fullname', data-name='account-edit-form$f$fullname', value=fields['fullname'])
+            .form-group
+                label password
+                input(type='text', name='account-edit-form$f$password', data-name='account-edit-form$f$password', value=fields['password'])
+        .row
+        button#on-account-edit-submit.col-xs-2.btn.btn-default(data-action=vm['on-account-edit-submit'].href, data-method= 'POST') on-account-edit-submit
+    script.
+        (function () {
+            var form = $('#account-edit-form > form'),
+                bindings = {
+                    'on-account-edit-submit': {
+                        'account-edit-form$f$fullname': 'send-account-edit-data$f$fullname'
+                        ,'account-edit-form$f$password': 'send-account-edit-data$f$password'
+                    }
+                };
+            function toURL(href) {
+                var a = document.createElement('a');
+                a.href = href;
+                return new URL(a.href);
+            }
+            $('#account-edit-form > form > button[data-action]').click(function () {
+                var action = toURL($(this).data('action')),
+                    method = $(this).data('method'),
+                    mapping = bindings[this.id];
+                $('#account-edit-form input').each(function () {
+                    var name = $(this).data('name');
+                    if (action.searchParams.has(name)) {
+                        action.searchParams.set(name, input.value);
+                    }
+                    this.name = mapping[name] || '';
+                });
+                form.attr('action', action.href);
+                form.attr('method', method);
+            });
+        }());

@@ -1,0 +1,13 @@
+#selector-list.container
+    h3 selector-list
+    table.table.table-hover.table-condensed
+        thead
+            tr
+                th #
+        tbody
+            - var sid = vm['selector-list'].selected ? vm['selector-list'].selected.id : '';
+            each item, itemindex in vm['selector-list'].items
+                tr(class=item.id === sid ? 'info' : '')
+                    - var href = vm['03d30503-ed92-45f0-95f5-f45ffa682858'][itemindex].href
+                    th(scope='row')
+                        a(href=href)= item.id

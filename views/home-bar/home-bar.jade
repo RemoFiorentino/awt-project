@@ -1,0 +1,10 @@
+#home-bar
+    .container
+        .row
+            a.col-xs-2.btn.btn-default(href=vm['login-btn-pressed'].href) login-btn-pressed
+            a.col-xs-2.btn.btn-default(href=vm['register-btn-pressed'].href) register-btn-pressed
+            form(action=vm['logout-btn-pressed'].action, method="POST")
+                each value, name in vm['logout-btn-pressed'].hiddens
+                    input(type='hidden', name=name, value=value)
+                button.col-xs-2.btn.btn-default Logout-btn-pressed
+            a.col-xs-2.btn.btn-default(href=vm['account-edit-btn-pressed'].href) account-edit-btn-pressed

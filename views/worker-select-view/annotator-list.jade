@@ -1,0 +1,13 @@
+#annotator-list.container
+    h3 annotator-list
+    table.table.table-hover.table-condensed
+        thead
+            tr
+                th #
+        tbody
+            - var sid = vm['annotator-list'].selected ? vm['annotator-list'].selected.id : '';
+            each item, itemindex in vm['annotator-list'].items
+                tr(class=item.id === sid ? 'info' : '')
+                    - var href = vm['2cfceb3a-afad-4055-8a88-f3fd11538e0c'][itemindex].href
+                    th(scope='row')
+                        a(href=href)= item.id

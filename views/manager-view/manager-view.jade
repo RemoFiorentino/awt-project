@@ -1,0 +1,10 @@
+#manager-view
+    include ./list-campaign.jade
+    .container
+        .row
+            a.col-xs-2.btn.btn-default(href=vm['create-campaign-btn-pressed'].href) create-campaign-btn-pressed
+            a.col-xs-2.btn.btn-default(href=vm['go-edit-campaign'].href) go-edit-campaign
+            form(action=vm['change-state-campaign'].action, method="POST")
+                each value, name in vm['change-state-campaign'].hiddens
+                    input(type='hidden', name=name, value=value)
+                button.col-xs-2.btn.btn-default change-state-campaign

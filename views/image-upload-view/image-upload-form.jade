@@ -1,0 +1,41 @@
+#image-upload-form.container
+    h3 image-upload-form
+    form(id='image-upload-form')
+        - var fields = vm['image-upload-form'].fields
+            .form-group
+                label image
+                input(type='text', name='image-upload-form$f$image', data-name='image-upload-form$f$image', value=fields['image'])
+            .form-group
+                label name
+                input(type='text', name='image-upload-form$f$name', data-name='image-upload-form$f$name', value=fields['name'])
+        .row
+        button#on-image-upload-submit.col-xs-2.btn.btn-default(data-action=vm['on-image-upload-submit'].href, data-method= 'POST') on-image-upload-submit
+    script.
+        (function () {
+            var form = $('#image-upload-form > form'),
+                bindings = {
+                    'on-image-upload-submit': {
+                        'image-upload-form$f$image': 'send-image-upload-data$f$image'
+                        ,'image-upload-form$f$name': 'send-image-upload-data$f$name'
+                    }
+                };
+            function toURL(href) {
+                var a = document.createElement('a');
+                a.href = href;
+                return new URL(a.href);
+            }
+            $('#image-upload-form > form > button[data-action]').click(function () {
+                var action = toURL($(this).data('action')),
+                    method = $(this).data('method'),
+                    mapping = bindings[this.id];
+                $('#image-upload-form input').each(function () {
+                    var name = $(this).data('name');
+                    if (action.searchParams.has(name)) {
+                        action.searchParams.set(name, input.value);
+                    }
+                    this.name = mapping[name] || '';
+                });
+                form.attr('action', action.href);
+                form.attr('method', method);
+            });
+        }());

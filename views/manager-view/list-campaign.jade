@@ -1,0 +1,33 @@
+#list-campaign.container
+    h3 list-campaign
+    table.table.table-hover.table-condensed
+        thead
+            tr
+                th #
+                th campaign-edit
+                th campaign-name
+                th campaign-next_action
+                th campaign-show
+                th campaign-state
+        tbody
+            - var sid = vm['list-campaign'].selected ? vm['list-campaign'].selected.id : '';
+            each item, itemindex in vm['list-campaign'].items
+                tr(class=item.id === sid ? 'info' : '')
+                    - var href = vm['496ca6e1-d56b-4d3d-9567-ca80fbeeb9e5'][itemindex].href
+                    th(scope='row')
+                        a(href=href)= item.id
+                    td
+
+                        a(href=href)= item['campaign-edit']
+                    td
+
+                        a(href=href)= item['campaign-name']
+                    td
+
+                        a(href=href)= item['campaign-next_action']
+                    td
+
+                        a(href=href)= item['campaign-show']
+                    td
+
+                        a(href=href)= item['campaign-state']

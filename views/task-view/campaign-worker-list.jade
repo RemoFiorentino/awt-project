@@ -1,0 +1,44 @@
+#campaign-worker-list.container
+    h3 campaign-worker-list
+    table.table.table-hover.table-condensed
+        thead
+            tr
+                th #
+                th accepted
+                th annotated
+                th available
+                th rejected
+                th type
+                th actions
+        tbody
+            - var sid = vm['campaign-worker-list'].selected ? vm['campaign-worker-list'].selected.id : '';
+            each item, itemindex in vm['campaign-worker-list'].items
+                tr(class=item.id === sid ? 'info' : '')
+                    - var href = vm['d6e0104f-642c-4a06-93db-067fb0ba1543'][itemindex].href
+                    th(scope='row')
+                        a(href=href)= item.id
+                    td
+
+                        a(href=href)= item['accepted']
+                    td
+
+                        a(href=href)= item['annotated']
+                    td
+
+                        a(href=href)= item['available']
+                    td
+
+                        a(href=href)= item['rejected']
+                    td
+
+                        a(href=href)= item['type']
+                    td
+                        .dropdown
+                            button.btn.btn-default.dropdown-toggle(data-toggle='dropdown')
+                                span Actions
+                                span.caret
+                            ul.dropdown-menu
+                                li
+                                    a(href=vm['go-to-image-selection'][itemindex].href) go-to-image-selection
+                                li
+                                    a(href=vm['go-to-image-annotation'][itemindex].href) go-to-image-annotation

@@ -1,0 +1,31 @@
+#list-available-workers.container
+    h3 list-available-workers
+    table.table.table-hover.table-condensed
+        thead
+            tr
+                th #
+                th fullname
+                th id
+        tbody
+            - var sid = vm['list-available-workers'].selected ? vm['list-available-workers'].selected.id : '';
+            each item, itemindex in vm['list-available-workers'].items
+                tr(class=item.id === sid ? 'info' : '')
+                    - var action = vm['2c13eb15-2680-4393-a576-b5f2cc847b95'][itemindex].action
+                    - var hiddens = vm['2c13eb15-2680-4393-a576-b5f2cc847b95'][itemindex].hiddens
+                    th(scope='row')
+                        form(action=action, method="POST")
+                            each value, name in hiddens
+                                input(type='hidden', name=name, value=value)
+                            button.btn-link= item.id
+                    td
+
+                        form(action=action, method="POST")
+                            each value, name in hiddens
+                                input(type='hidden', name=name, value=value)
+                            button.btn-link= item['fullname']
+                    td
+
+                        form(action=action, method="POST")
+                            each value, name in hiddens
+                                input(type='hidden', name=name, value=value)
+                            button.btn-link= item['id']

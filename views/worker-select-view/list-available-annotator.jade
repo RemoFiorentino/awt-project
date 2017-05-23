@@ -1,0 +1,31 @@
+#list-available-annotator.container
+    h3 list-available-annotator
+    table.table.table-hover.table-condensed
+        thead
+            tr
+                th #
+                th fullname
+                th id
+        tbody
+            - var sid = vm['list-available-annotator'].selected ? vm['list-available-annotator'].selected.id : '';
+            each item, itemindex in vm['list-available-annotator'].items
+                tr(class=item.id === sid ? 'info' : '')
+                    - var action = vm['d80e9591-d019-4eb7-b1f3-205377663d62'][itemindex].action
+                    - var hiddens = vm['d80e9591-d019-4eb7-b1f3-205377663d62'][itemindex].hiddens
+                    th(scope='row')
+                        form(action=action, method="POST")
+                            each value, name in hiddens
+                                input(type='hidden', name=name, value=value)
+                            button.btn-link= item.id
+                    td
+
+                        form(action=action, method="POST")
+                            each value, name in hiddens
+                                input(type='hidden', name=name, value=value)
+                            button.btn-link= item['fullname']
+                    td
+
+                        form(action=action, method="POST")
+                            each value, name in hiddens
+                                input(type='hidden', name=name, value=value)
+                            button.btn-link= item['id']
