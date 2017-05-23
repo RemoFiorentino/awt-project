@@ -1,0 +1,49 @@
+#register-form.container
+    h3 register-form
+    form(id='register-form')
+        - var fields = vm['register-form'].fields
+            .form-group
+                label account-type
+                input(type='text', name='register-form$f$account-type', data-name='register-form$f$account-type', value=fields['account-type'])
+            .form-group
+                label fullname
+                input(type='text', name='register-form$f$fullname', data-name='register-form$f$fullname', value=fields['fullname'])
+            .form-group
+                label password
+                input(type='text', name='register-form$f$password', data-name='register-form$f$password', value=fields['password'])
+            .form-group
+                label username
+                input(type='text', name='register-form$f$username', data-name='register-form$f$username', value=fields['username'])
+        .row
+        button#on-register-submit.col-xs-2.btn.btn-default(data-action=vm['on-register-submit'].href, data-method= 'POST') on-register-submit
+    script.
+        (function () {
+            var form = $('#register-form > form'),
+                bindings = {
+                    'on-register-submit': {
+                        'register-form$f$account-type': 'send-registration-data$f$account-type'
+                        ,'register-form$f$password': 'send-registration-data$f$password'
+                        ,'register-form$f$fullname': 'send-registration-data$f$fullname'
+                        ,'register-form$f$username': 'send-registration-data$f$username'
+                    }
+                };
+            function toURL(href) {
+                var a = document.createElement('a');
+                a.href = href;
+                return new URL(a.href);
+            }
+            $('#register-form > form > button[data-action]').click(function () {
+                var action = toURL($(this).data('action')),
+                    method = $(this).data('method'),
+                    mapping = bindings[this.id];
+                $('#register-form input').each(function () {
+                    var name = $(this).data('name');
+                    if (action.searchParams.has(name)) {
+                        action.searchParams.set(name, input.value);
+                    }
+                    this.name = mapping[name] || '';
+                });
+                form.attr('action', action.href);
+                form.attr('method', method);
+            });
+        }());

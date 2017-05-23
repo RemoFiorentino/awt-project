@@ -1,0 +1,41 @@
+#login-form.container
+    h3 login-Fom
+    form(id='login-form')
+        - var fields = vm['login-form'].fields
+            .form-group
+                label password
+                input(type='text', name='login-form$f$password', data-name='login-form$f$password', value=fields['password'])
+            .form-group
+                label username
+                input(type='text', name='login-form$f$username', data-name='login-form$f$username', value=fields['username'])
+        .row
+        button#on-login-submit.col-xs-2.btn.btn-default(data-action=vm['on-login-submit'].href, data-method= 'POST') on-login-submit
+    script.
+        (function () {
+            var form = $('#login-form > form'),
+                bindings = {
+                    'on-login-submit': {
+                        'login-form$f$password': 'send-login-data$f$password'
+                        ,'login-form$f$username': 'send-login-data$f$username'
+                    }
+                };
+            function toURL(href) {
+                var a = document.createElement('a');
+                a.href = href;
+                return new URL(a.href);
+            }
+            $('#login-form > form > button[data-action]').click(function () {
+                var action = toURL($(this).data('action')),
+                    method = $(this).data('method'),
+                    mapping = bindings[this.id];
+                $('#login-form input').each(function () {
+                    var name = $(this).data('name');
+                    if (action.searchParams.has(name)) {
+                        action.searchParams.set(name, input.value);
+                    }
+                    this.name = mapping[name] || '';
+                });
+                form.attr('action', action.href);
+                form.attr('method', method);
+            });
+        }());
