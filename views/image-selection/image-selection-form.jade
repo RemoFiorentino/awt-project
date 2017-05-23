@@ -1,0 +1,37 @@
+#image-selection-form.container
+    h3 image-selection-form
+    form(id='image-selection-form')
+        - var fields = vm['image-selection-form'].fields
+            .form-group
+                label accepted
+                input(type='text', name='image-selection-form$f$accepted', data-name='image-selection-form$f$accepted', value=fields['accepted'])
+        .row
+        button#on-image-selection-submit.col-xs-2.btn.btn-default(data-action=vm['on-image-selection-submit'].href, data-method= 'POST') on-image-selection-submit
+    script.
+        (function () {
+            var form = $('#image-selection-form > form'),
+                bindings = {
+                    'on-image-selection-submit': {
+                        'image-selection-form$f$accepted': 'send-image-selection$f$accepted'
+                    }
+                };
+            function toURL(href) {
+                var a = document.createElement('a');
+                a.href = href;
+                return new URL(a.href);
+            }
+            $('#image-selection-form > form > button[data-action]').click(function () {
+                var action = toURL($(this).data('action')),
+                    method = $(this).data('method'),
+                    mapping = bindings[this.id];
+                $('#image-selection-form input').each(function () {
+                    var name = $(this).data('name');
+                    if (action.searchParams.has(name)) {
+                        action.searchParams.set(name, input.value);
+                    }
+                    this.name = mapping[name] || '';
+                });
+                form.attr('action', action.href);
+                form.attr('method', method);
+            });
+        }());
